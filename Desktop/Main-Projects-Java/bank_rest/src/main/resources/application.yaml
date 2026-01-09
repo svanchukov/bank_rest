@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: svanchukov
+
+  datasource:
+    url: jdbc:postgresql://localhost:5435/banks
+    username: banks
+    password: banks
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  logging:
+    level:
+      demo.bank.svanchukov: DEBUG
+      org.springframework.security: INFO
