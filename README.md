@@ -36,11 +36,12 @@ CREATE TABLE cards (
 1. Создание админа запросом sql, если он автоамтически не создался (я прописал автоматическое создание, но все же):
 INSERT INTO users (email, fio, password, user_status, role)
 VALUES ('admin@bank.com', 'Админов Админ Админович', '$2a$10$v7m6.z7yF/1nOqXmXoR4p.uPZ6Xh5N2T7Wp8Y6Xh5N2T7Wp8Y6Xh5', 'ACTIVE', 'ADMIN');
-2. Тестирование в postman, по адресу http://localhost:8080/auth/login -> body -> { "email": "admin@bank.com, "password": "admin123"
+ или VALUES ('admin@bank.com', 'Админов Админ Админович', 'admin@123', 'ACTIVE', 'ADMIN');
+3. Тестирование в postman, по адресу http://localhost:8080/auth/login -> body -> { "email": "admin@bank.com, "password": "admin123"
 Фото пример: https://github.com/user-attachments/assets/cecab40a-8053-47b1-be6b-b95ffd53a925
-3. Выдается токен jwt, его нужно вставить в Authorization -> Bearer Token 
+4. Выдается токен jwt, его нужно вставить в Authorization -> Bearer Token 
 Фото пример: https://github.com/user-attachments/assets/57af10c2-4f08-463f-b11e-76fe3cef0215"
-4. После этого можно тестировать остальные сервисы админа, создание карт, проверка:
+5. После этого можно тестировать остальные сервисы админа, создание карт, проверка:
 Карты:
 GET /users/{userId}/cards — Получить список всех карт пользователя (с пагинацией).
 GET /users/{userId}/cards/{cardId} — Получить детальную информацию по конкретной карте.
