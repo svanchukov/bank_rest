@@ -76,7 +76,6 @@
         </createTable>
     </changeSet>
 
-    <!-- 3. FK card.owner_id → table_users.id -->
     <changeSet id="003-add-card-owner-fk" author="svanchukov">
         <addForeignKeyConstraint
                 constraintName="fk_card_owner"
@@ -87,7 +86,6 @@
                 onDelete="CASCADE"/>
     </changeSet>
 
-    <!-- 4. Значения по умолчанию -->
     <changeSet id="004-add-defaults-to-card" author="svanchukov">
         <addDefaultValue
                 tableName="card"
@@ -98,6 +96,16 @@
                 tableName="card"
                 columnName="status"
                 defaultValue="ACTIVE"/>
+    </changeSet>
+
+    <changeSet id="20240522-add-admin" author="svanchukov">
+        <insert tableName="table_users">
+            <column name="email" value="admin@bank.com"/>
+            <column name="password" value="$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00dmReW6KDCkS6"/>
+            <column name="fio" value="Главный Администратор"/>
+            <column name="role" value="ADMIN"/>
+            <column name="user_status" value="ACTIVE"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

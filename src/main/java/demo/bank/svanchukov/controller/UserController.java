@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.nio.file.AccessDeniedException;
@@ -46,6 +47,7 @@ public class UserController {
 
     @Operation(summary = "Заблокировать карту", description = "Позволяет пользователю заблокировать свою карту")
     @PostMapping("/{userId}/cards/{cardId}/block")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> blockCard(@PathVariable("userId") Long userId, @PathVariable("cardId") Long cardId) {
         try {
             cardService.requestBlock(userId, cardId);

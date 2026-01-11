@@ -20,3 +20,9 @@ spring:
     level:
       demo.bank.svanchukov: DEBUG
       org.springframework.security: INFO
+      org:
+        springframework:
+          security:
+            web:
+              FilterChainProxy: DEBUG
+

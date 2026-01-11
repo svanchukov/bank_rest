@@ -11,6 +11,7 @@ import demo.bank.svanchukov.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserDTO> getAllUsers() {
         log.info("Запрос на получение всех пользователей");
@@ -59,9 +61,10 @@ public class UserService {
         User user = new User();
         user.setFio(dto.getFio());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        user.setPassword(encodedPassword);
         user.setUserStatus(UserStatus.ACTIVE);
-        user.setRole(Role.ROLE_USER);
+        user.setRole(Role.USER);
 
         userRepository.save(user);
 

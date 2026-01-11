@@ -18,10 +18,15 @@ public class CardDTO {
 
     public CardDTO(Long id, String cardNumber, BigDecimal balance, CardStatus status, Long ownerId, LocalDateTime expiryDate) {
         this.id = id;
-        this.cardNumber = cardNumber;
+        this.cardNumber = maskNumber(cardNumber);
         this.balance = balance;
         this.status = status;
-        this.ownerId =  ownerId;
+        this.ownerId = ownerId;
         this.expiryDate = expiryDate;
+    }
+
+    private String maskNumber(String number) {
+        if (number == null || number.length() < 4) return "****";
+        return "**** **** **** " + number.substring(number.length() - 4);
     }
 }
