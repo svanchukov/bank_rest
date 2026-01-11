@@ -1,0 +1,38 @@
+﻿# Игнорируем всё что выше по пути
+/*
+!/.gitignore
+!/.gitattributes
+!/src/
+!/pom.xml
+!/mvnw
+!/mvnw.cmd
+!/*.md
+!/*.yaml
+!/*.yml
+
+# Игнорируем системные файлы
+.DS_Store
+Thumbs.db
+
+# Игнорируем IDE файлы
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+bin/
+
+# Игнорируем скомпилированные файлы
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Игнорируем логи
+*.log
+
+# Игнорируем временные файлы
+*.tmp
+~$*

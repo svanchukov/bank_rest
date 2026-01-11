@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <!-- 1. Таблица пользователей -->
+    <changeSet id="001-create-table-users" author="svanchukov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="table_users"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="table_users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fio" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <!-- 2. Таблица карт -->
+    <changeSet id="002-create-table-card" author="svanchukov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="card"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="card">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="card_number" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="owner_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="expiry_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="balance" type="NUMERIC(19,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- 3. FK card.owner_id → table_users.id -->
+    <changeSet id="003-add-card-owner-fk" author="svanchukov">
+        <addForeignKeyConstraint
+                constraintName="fk_card_owner"
+                baseTableName="card"
+                baseColumnNames="owner_id"
+                referencedTableName="table_users"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+    <!-- 4. Значения по умолчанию -->
+    <changeSet id="004-add-defaults-to-card" author="svanchukov">
+        <addDefaultValue
+                tableName="card"
+                columnName="balance"
+                defaultValue="0"/>
+
+        <addDefaultValue
+                tableName="card"
+                columnName="status"
+                defaultValue="ACTIVE"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: svanchukov
+
+  datasource:
+    url: jdbc:postgresql://localhost:5435/banks
+    username: banks
+    password: banks
+
+  liquibase:
+    change-log: classpath:db/migration/v.1.0.0/0000-init-table.xml
+    enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  logging:
+    level:
+      demo.bank.svanchukov: DEBUG
+      org.springframework.security: INFO
