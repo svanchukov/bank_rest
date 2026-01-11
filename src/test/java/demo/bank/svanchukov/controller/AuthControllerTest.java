@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// 1. Используем WebMvcTest вместо SpringBootTest, чтобы не запускать базу и DbInitializer
+// Используем WebMvcTest вместо SpringBootTest, чтобы не запускать базу и DbInitializer
 @WebMvcTest(AuthController.class)
 class AuthControllerTest {
 
@@ -35,7 +35,6 @@ class AuthControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // 2. Мокаем все зависимости, которые есть в конструкторе AuthController
     @MockBean
     private UserService userService;
 
@@ -51,7 +50,6 @@ class AuthControllerTest {
     @Test
     @DisplayName("Вход - Успех: выдача токена при верном пароле")
     void login_Success() throws Exception {
-        // Arrange
         String email = "test@bank.com";
         String password = "correct_password";
         String hashedPassword = "hashed_password_in_db";
@@ -63,14 +61,12 @@ class AuthControllerTest {
 
         UserDetails userDetails = new User(email, hashedPassword, Collections.emptyList());
 
-        // Настраиваем поведение моков
         when(userDetailsService.loadUserByUsername(email)).thenReturn(userDetails);
         when(passwordEncoder.matches(password, hashedPassword)).thenReturn(true);
         when(jwtService.generateToken(any(UserDetails.class))).thenReturn(mockToken);
 
-        // Act & Assert
         mockMvc.perform(post("/auth/login")
-                        .with(csrf()) // Добавляем CSRF, иначе Spring Security выдаст 403
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
