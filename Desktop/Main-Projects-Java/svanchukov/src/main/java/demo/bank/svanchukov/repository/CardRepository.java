@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    @Query("SELECT c FROM card c JOIN FETCH c.owner WHERE c.owner.id = :ownerId")
     Page<Card> findByOwnerId(Long ownerId, Pageable pageable);
+
 
 }

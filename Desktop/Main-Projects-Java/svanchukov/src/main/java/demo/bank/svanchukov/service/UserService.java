@@ -5,12 +5,12 @@ import demo.bank.svanchukov.dto.user.UserDTO;
 import demo.bank.svanchukov.entity.User;
 import demo.bank.svanchukov.enum_Card_User.Role;
 import demo.bank.svanchukov.enum_Card_User.UserStatus;
-import demo.bank.svanchukov.exception.user.EmailAlreadyExistsException;
-import demo.bank.svanchukov.exception.user.UserNotFoundException;
+import demo.bank.svanchukov.exception.EmailAlreadyExistsException;
+import demo.bank.svanchukov.exception.UserNotFoundException;
 import demo.bank.svanchukov.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserDTO> getAllUsers() {
         log.info("Запрос на получение всех пользователей");
@@ -59,7 +60,7 @@ public class UserService {
         User user = new User();
         user.setFio(dto.getFio());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setUserStatus(UserStatus.ACTIVE);
         user.setRole(Role.ROLE_USER);
 
@@ -89,7 +90,7 @@ public class UserService {
 
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             log.debug("Обновление пароля для пользователя id: {}", id);
-            user.setPassword(dto.getPassword());
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
         userRepository.save(user);

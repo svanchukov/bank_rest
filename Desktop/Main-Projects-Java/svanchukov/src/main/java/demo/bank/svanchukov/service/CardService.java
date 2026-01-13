@@ -3,8 +3,7 @@ package demo.bank.svanchukov.service;
 import demo.bank.svanchukov.dto.card.CardDTO;
 import demo.bank.svanchukov.entity.Card;
 import demo.bank.svanchukov.enum_Card_User.CardStatus;
-import demo.bank.svanchukov.exception.card.CardAccessDeniedException;
-import demo.bank.svanchukov.exception.card.CardNotFoundException;
+import demo.bank.svanchukov.exception.CardNotFoundException;
 import demo.bank.svanchukov.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -43,7 +42,7 @@ public class CardService {
                 .orElseThrow(() -> new CardNotFoundException(cardId));
 
         if (!card.getOwner().getId().equals(userId)) {
-            throw new CardAccessDeniedException("Попытка доступа к чужой карте");
+            throw new AccessDeniedException("Чужая карта");
         }
 
         return card;

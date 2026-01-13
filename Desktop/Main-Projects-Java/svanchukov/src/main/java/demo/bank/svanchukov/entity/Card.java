@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.YearMonth;
 
-@Entity(name = "card")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,7 +27,7 @@ public class Card {
     private User owner;
 
     @Column(name = "expiry_date", nullable = false)
-    private LocalDateTime expiryDate;
+    private YearMonth expiryDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

@@ -7,10 +7,6 @@ spring:
     username: banks
     password: banks
 
-  liquibase:
-    change-log: classpath:db/migration/v.1.0.0/0000-init-table.xml
-    enabled: true
-
   jpa:
     hibernate:
       ddl-auto: validate
